@@ -1,6 +1,6 @@
 Package: bayeslist
 Title: Bayesian Analysis of List Experiments with Prior Information
-Version: 0.0.1.4
+Version: 0.0.1.5
 Author: Xiao Lu [aut, cre],
   Richard Traunmüller [aut]
 Authors@R: c(person(given = "Xiao",
@@ -25,6 +25,6 @@ LinkingTo: BH (>= 1.66.0), Rcpp (>= 0.12.0), RcppEigen (>= 0.3.3.3.0),
 SystemRequirements: GNU make
 RoxygenNote: 7.3.2
 NeedsCompilation: yes
-Packaged: 2024-11-27 15:23:45 UTC; xiao
+Packaged: 2025-03-20 02:08:04 UTC; xiao
 Repository: CRAN
-Date/Publication: 2024-11-28 11:30:05 UTC
+Date/Publication: 2025-03-20 04:00:02 UTC
