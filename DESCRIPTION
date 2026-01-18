@@ -1,6 +1,6 @@
 Package: bayeslist
 Title: Bayesian Analysis of List Experiments with Prior Information
-Version: 0.0.1.5
+Version: 0.0.1.6
 Author: Xiao Lu [aut, cre],
   Richard Traunmüller [aut]
 Authors@R: c(person(given = "Xiao",
@@ -11,7 +11,7 @@ Authors@R: c(person(given = "Xiao",
                     family = "Traunmüller",
                     role = "aut"))
 Maintainer: Xiao Lu <xiao.lu.research@gmail.com>
-Description: Estimates Bayesian models of list experiments with informative priors. It includes functionalities to estimate different types of list experiment models with varying prior information. See Lu and Traunmüller (2021) <doi:10.2139/ssrn.3871089> for examples and details of estimation.
+Description: Estimates Bayesian models of list experiments with informative priors. It includes functionalities to estimate different types of list experiment models with varying prior information. See Lu and Traunmüller (2026) <doi:10.1017/psrm.2025.10084> for examples and details of estimation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -25,6 +25,6 @@ LinkingTo: BH (>= 1.66.0), Rcpp (>= 0.12.0), RcppEigen (>= 0.3.3.3.0),
 SystemRequirements: GNU make
 RoxygenNote: 7.3.2
 NeedsCompilation: yes
-Packaged: 2025-03-20 02:08:04 UTC; xiao
+Packaged: 2026-01-18 08:34:02 UTC; xiao
 Repository: CRAN
-Date/Publication: 2025-03-20 04:00:02 UTC
+Date/Publication: 2026-01-18 09:50:02 UTC

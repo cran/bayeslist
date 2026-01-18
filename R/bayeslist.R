@@ -32,6 +32,7 @@
 #' @param predictvar_type The type of the outcome variable to be predicted. Options include "linear" and "binary". The default is "binary".
 #' @param parallel Logic. Indicating whether to do paralell computing. The default is TRUE.
 #' @param robust Logic. Indicating whether to impose robust constraints on the intercept-only model. The default is FALSE.
+#' @param sigma0 Standard deviation of the uninformative prior on psi and delta. The default is 10.
 #'
 #' @return A \code{bayeslist} object. An object of class \code{bayeslist} contains the following elements
 #'
@@ -67,7 +68,7 @@
 #'
 #' }
 #'
-#' @references Lu, X. and Traunmüller, R. (2021). Improving Studies of Sensitive Topics Using Prior Evidence: A Unified Bayesian Framework for List Experiments, SSRN, \doi{10.2139/ssrn.3871089}.
+#' @references Lu, X. and Traunmüller, R. (2026). Improving Studies of Sensitive Topics Using Prior Evidence: An Informative Bayesian Framework for List Experiments, Political Science Research and Methods, \doi{10.1017/psrm.2025.10084}.
 #'
 #' @import Formula
 #' @import rstan
@@ -83,7 +84,7 @@
 #'data(srilanka)
 #'
 #'# Model 1: intercept-only outcome model without prior information:
-#'mod1 <- bayeslist(sexaussault ~ 1, data = srilanka, treat = "treatment", J = 3,
+#'mod1 <- bayeslist(sexassault ~ 1, data = srilanka, treat = "treatment", J = 3,
 #'type = "outcome", nsim = 200, thin = 1, CIsize = 0.95, nchain = 1,
 #'seeds = 342321, prior = NULL, parallel = TRUE)
 #'summary(mod1) # summary of estimates
@@ -94,7 +95,7 @@
 #'
 #'\donttest{
 #'# Model 2: multivariate outcome model without prior information:
-#'mod2 <- bayeslist(sexaussault ~ age + edu, data = srilanka, treat = "treatment", J = 3,
+#'mod2 <- bayeslist(sexassault ~ age + edu, data = srilanka, treat = "treatment", J = 3,
 #'type = "outcome", nsim = 200, thin = 1, CIsize = 0.95, nchain = 1,
 #'seeds = 342321, prior = NULL, parallel = TRUE)
 #'summary(mod2) # summary of estimates
@@ -106,7 +107,7 @@
 #'# Model 3: intercept-only outcome model with prior information from medicolegal reports, i.e.,
 #'# with a prior beta-logistic distribution BL(38, 146).
 #' a <- 38; b <-146
-#'mod3 <- bayeslist(sexaussault ~ 1, data = srilanka, treat = "treatment", J = 3,
+#'mod3 <- bayeslist(sexassault ~ 1, data = srilanka, treat = "treatment", J = 3,
 #'type = "outcome", nsim = 200, thin = 1, CIsize = 0.95, nchain = 1,
 #'seeds = 342321, prior = "BL", BL_a = a, BL_b = b,, parallel = TRUE)
 #'summary(mod3)
@@ -157,7 +158,8 @@ bayeslist <- function(formula,
                       predictvar_type = "binary", # outcome type for the predictor model: either "binary" or "linear". The default is binary.
                       # direct = NULL, # data of direct item for the misreport model
                       parallel = TRUE,
-                      robust = FALSE
+                      robust = FALSE,
+                      sigma0 = 10 # standard deviation of the uninformative prior on coefficients of psi and delta. Default is 10.
 ) {
   if (is.null(burnin))
     burnin <- floor(nsim / 2)
@@ -1827,7 +1829,8 @@ bayeslist <- function(formula,
           Y = Y, # number of affirmative answers
           K = K, # number of covariates
           X = X, # covariate matrix
-          treat = treat # treatment indicator
+          treat = treat, # treatment indicator
+          sigma0 = sigma0
         )
       } else if (type == "predict") {
         # model_predict_noaux = stan_model("list_predictor_constrained_logit1.0.stan")
@@ -1848,7 +1851,8 @@ bayeslist <- function(formula,
           K = K, # number of covariates
           X = X, # covariate matrix
           treat = treat, # treatment indicator
-          outcome = outcome # outcome to be predicted
+          outcome = outcome, # outcome to be predicted
+          sigma0 = sigma0
         )
       } else {
         # model_misreport_noaux = stan_model("list_misreport_constrained1.0.stan")
@@ -1865,7 +1869,8 @@ bayeslist <- function(formula,
           K = K, # number of covariates
           X = X, # covariate matrix
           treat = treat, # treatment indicator
-          direct = direct # direct item
+          direct = direct, # direct item
+          sigma0 = sigma0
         )
       }
     }

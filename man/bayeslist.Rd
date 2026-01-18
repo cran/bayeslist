@@ -33,7 +33,8 @@ bayeslist(
   predictvar = NULL,
   predictvar_type = "binary",
   parallel = TRUE,
-  robust = FALSE
+  robust = FALSE,
+  sigma0 = 10
 )
 }
 \arguments{
@@ -94,6 +95,8 @@ bayeslist(
 \item{parallel}{Logic. Indicating whether to do paralell computing. The default is TRUE.}
 
 \item{robust}{Logic. Indicating whether to impose robust constraints on the intercept-only model. The default is FALSE.}
+
+\item{sigma0}{Standard deviation of the uninformative prior on psi and delta. The default is 10.}
 }
 \value{
 A \code{bayeslist} object. An object of class \code{bayeslist} contains the following elements
@@ -140,7 +143,7 @@ The function returns a \code{bayeslist} object that can be further investigated 
 data(srilanka)
 
 # Model 1: intercept-only outcome model without prior information:
-mod1 <- bayeslist(sexaussault ~ 1, data = srilanka, treat = "treatment", J = 3,
+mod1 <- bayeslist(sexassault ~ 1, data = srilanka, treat = "treatment", J = 3,
 type = "outcome", nsim = 200, thin = 1, CIsize = 0.95, nchain = 1,
 seeds = 342321, prior = NULL, parallel = TRUE)
 summary(mod1) # summary of estimates
@@ -151,7 +154,7 @@ plot(mod1, only_prev = TRUE) # prevalence plot
 
 \donttest{
 # Model 2: multivariate outcome model without prior information:
-mod2 <- bayeslist(sexaussault ~ age + edu, data = srilanka, treat = "treatment", J = 3,
+mod2 <- bayeslist(sexassault ~ age + edu, data = srilanka, treat = "treatment", J = 3,
 type = "outcome", nsim = 200, thin = 1, CIsize = 0.95, nchain = 1,
 seeds = 342321, prior = NULL, parallel = TRUE)
 summary(mod2) # summary of estimates
@@ -163,7 +166,7 @@ plot(mod2) # prevalence + coefficient plot
 # Model 3: intercept-only outcome model with prior information from medicolegal reports, i.e.,
 # with a prior beta-logistic distribution BL(38, 146).
 a <- 38; b <-146
-mod3 <- bayeslist(sexaussault ~ 1, data = srilanka, treat = "treatment", J = 3,
+mod3 <- bayeslist(sexassault ~ 1, data = srilanka, treat = "treatment", J = 3,
 type = "outcome", nsim = 200, thin = 1, CIsize = 0.95, nchain = 1,
 seeds = 342321, prior = "BL", BL_a = a, BL_b = b,, parallel = TRUE)
 summary(mod3)
@@ -187,5 +190,5 @@ plot(mod4)
 
 }
 \references{
-Lu, X. and Traunmüller, R. (2021). Improving Studies of Sensitive Topics Using Prior Evidence: A Unified Bayesian Framework for List Experiments, SSRN, \doi{10.2139/ssrn.3871089}.
+Lu, X. and Traunmüller, R. (2026). Improving Studies of Sensitive Topics Using Prior Evidence: An Informative Bayesian Framework for List Experiments, Political Science Research and Methods, \doi{10.1017/psrm.2025.10084}.
 }
